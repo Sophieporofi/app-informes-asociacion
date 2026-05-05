@@ -325,12 +325,11 @@ with tab1:
                 else:
                     pdf.set_y(20)
                 
-                # LA CORRECCIÓN: SIN EMOJI PARA QUE NO SE ROMPA LA FUENTE DEL PDF
                 if alerta_roja:
-                    pdf.set_text_color(220, 53, 69) # Rojo
+                    pdf.set_text_color(220, 53, 69)
                     pdf.set_font("helvetica", "B", 12)
                     pdf.cell(0, 8, "!!! ATENCION REQUERIDA: Seguimiento conductual/fisiologico necesario !!!", ln=1)
-                    pdf.set_text_color(0, 0, 0) # Volver a negro
+                    pdf.set_text_color(0, 0, 0)
                     pdf.ln(5)
 
                 for linea in informe.split('\n'):
@@ -348,9 +347,13 @@ with tab1:
                     for fragmento in fragmentos_seguros:
                         pdf.cell(w=0, h=6, txt=fragmento, ln=1)
                 
-                # --- AQUÍ ESTÁ LA SOLUCIÓN AL TYPEERROR ---
                 pdf_output = pdf.output(dest='S').encode('latin-1')
                 st.download_button("📕 Descargar Informe Oficial en PDF", data=pdf_output, file_name=f"Informe_{nombre_limpio}_{fecha}.pdf", mime="application/pdf")
+
+            # --- NUEVA CAJA DE TEXTO EDITABLE ---
+            st.markdown("---")
+            st.subheader("Vista Previa y Copia Rápida")
+            st.text_area("Si necesitas hacer un pequeño ajuste manual o simplemente quieres copiar y pegar el texto en otro documento, puedes hacerlo aquí:", value=informe, height=350)
 
 # --- PESTAÑA 2 - PANEL DE CONTROL ---
 with tab2:
